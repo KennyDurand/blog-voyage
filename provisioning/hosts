@@ -1,0 +1,2 @@
+[dev]
+100.100.100.101             ansible_ssh_user=vagrant

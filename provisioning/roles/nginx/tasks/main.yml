@@ -1,0 +1,39 @@
+---
+- name: Add APT repository
+  become: true
+  apt_repository:
+    repo: ppa:nginx/stable
+    state: present
+
+- name: Install package
+  become: yes
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+  - nginx
+  - nginx-extras
+  - openssl
+  - libssl1.0.0
+
+- name: Add nginx base configuration
+  become: yes
+  template:
+    src: nginx.conf.tmp
+    dest: /etc/nginx/nginx.conf
+  notify: Restart nginx
+
+- name: Add reverse proxy config file
+  become: yes
+  template:
+    src: sites-available/blog-voyage
+    dest: /etc/nginx/sites-available/blog-voyage
+  notify: Restart nginx
+
+- name: Enable reverse proxy
+  become: yes
+  file:
+    src: /etc/nginx/sites-available/blog-voyage
+    dest: /etc/nginx/sites-enabled/blog-voyage
+    state: link
+  notify: Restart nginx

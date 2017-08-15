@@ -1,0 +1,11 @@
+---
+- hosts: dev
+  become: yes
+  vars_files:
+    - vars/base.yml
+    - vars/dev.yml
+  roles:
+    - common
+    - php7
+    - nginx
+    - mysql

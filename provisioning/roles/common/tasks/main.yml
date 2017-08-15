@@ -1,0 +1,44 @@
+---
+- name: Install main packages
+  become: yes
+  apt:
+    pkg: "{{ item }}"
+  with_items:
+  - git
+  - vim
+  - curl
+  - wget
+  - python
+  - python-setuptools
+
+- name: Install pip
+  become: yes
+  easy_install:
+    name: pip
+
+- name: Set timezone
+  become: yes
+  template:
+    src: timezone.dist
+    dest: /etc/timezone
+
+- name: Set timezone
+  become: yes
+  file:
+    src: /usr/share/zoneinfo/{{ timezone }}
+    dest: /etc/localtime
+    state: link
+    force: yes
+
+- name: Set locale
+  become: yes
+  locale_gen:
+    name: fr_FR.UTF-8
+
+- name: Set default folder for user
+  become: yes
+  lineinfile:
+    dest: /home/vagrant/.bashrc
+    regexp: ^cd
+    line: cd /var/www/blog-voyage
+    create: yes

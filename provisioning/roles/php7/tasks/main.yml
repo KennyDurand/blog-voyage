@@ -1,0 +1,68 @@
+---
+- name: Add APT repository
+  become: yes
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+
+- name: Install packages
+  become: yes
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+    - php7.1
+    - php7.1-cgi
+    - php7.1-fpm
+    - php7.1-mysql
+    - php7.1-xml
+
+- name: Configure php.ini files
+  become: yes
+  lineinfile:
+    dest: "{{ item[0] }}"
+    regexp: "{{ item[1].regex }}"
+    line: "{{ item[1].line }}"
+  with_nested:
+    -
+      - /etc/php/7.1/cli/php.ini
+      - /etc/php/7.1/fpm/php.ini
+    -
+      - {regex: '^date.timezone', line: 'date.timezone = "Europe/Paris"'}
+      - {regex: '^upload_max_filesize', line: 'upload_max_filesize = 10M'}
+      - {regex: '^memory_limit', line: 'memory_limit = 512M'}
+      - {regex: '^session.gc_maxlifetime', line: 'session.gc_maxlifetime = 31536000'}
+      - {regex: '^session.cookie_lifetime', line: 'session.cookie_lifetime = 31536000'}
+      - {regex: '^session.cookie_httponly', line: 'session.cookie_httponly = 1'}
+      - {regex: '^session.cookie_secure', line: 'session.cookie_secure = 1'}
+  notify: Restart fpm
+
+- name: Change user
+  become: yes
+  lineinfile:
+    dest: /etc/php/7.1/fpm/pool.d/www.conf
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
+  with_items:
+    - {regex: '^user', line: 'user = {{ username }}'}
+    - {regex: '^group', line: 'group = {{ username }}'}
+    - {regex: '^listen\.owner', line: 'listen.owner = {{ username }}'}
+    - {regex: '^listen\.group', line: 'listen.group = {{ username }}'}
+  notify: Restart fpm
+
+- name: Set PHP processes management to 'dynamic'
+  become: yes
+  lineinfile:
+    dest: /etc/php/7.1/fpm/pool.d/www.conf
+    regexp: ^pm[^.]
+    line: pm = dynamic
+  notify: Restart fpm
+
+- name: Tuning PHP processes
+  become: yes
+  lineinfile:
+    dest: /etc/php/7.1/fpm/pool.d/www.conf
+    regexp: ^pm\.{{ item.key }}
+    line: pm.{{ item.key }} = {{ item.value }}
+  with_dict: "{{ php_pool_options }}"
+  notify: Restart fpm
