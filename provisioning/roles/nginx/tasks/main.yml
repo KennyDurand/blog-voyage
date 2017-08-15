@@ -37,3 +37,5 @@
     dest: /etc/nginx/sites-enabled/blog-voyage
     state: link
   notify: Restart nginx
+
+- include: https.yml

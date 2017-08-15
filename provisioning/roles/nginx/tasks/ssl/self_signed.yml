@@ -1,0 +1,13 @@
+---
+- name: Create OpenSSL configuration file
+  become: true
+  template:
+    src: openssl.cnf
+    dest: /etc/nginx/ssl/openssl.cnf
+
+- name: Generate a SSL certificate
+  command: openssl req -config openssl.cnf -new -nodes -x509 -subj "/C=FR/ST=Île-de-France/L=Paris/CN={{ domain_name }}" -keyout blog-voyage.key -out blog-voyage.crt
+  args:
+    chdir: /etc/nginx/ssl
+    creates: blog-voyage.crt
+  notify: Restart nginx

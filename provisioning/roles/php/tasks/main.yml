@@ -64,5 +64,5 @@
     dest: /etc/php/7.1/fpm/pool.d/www.conf
     regexp: ^pm\.{{ item.key }}
     line: pm.{{ item.key }} = {{ item.value }}
-  with_dict: "{{ php_pool_options }}"
+  with_dict: "{{ php.pool_options }}"
   notify: Restart fpm

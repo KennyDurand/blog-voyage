@@ -7,7 +7,7 @@
     - ~/.passwords.yml
   roles:
     - common
-    - php7
+    - php
     - nginx
     - mysql
     - wordpress

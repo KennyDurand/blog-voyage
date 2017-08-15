@@ -1,5 +1,5 @@
 user {{ username }};
-worker_processes {{ nginx_processes }};
+worker_processes {{ nginx.worker_processes }};
 pid /run/nginx.pid;
 
 events {

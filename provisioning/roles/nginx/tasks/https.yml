@@ -1,0 +1,18 @@
+---
+- name: Create SSL directory
+  become: true
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Generate a Diffie-Hellman key
+  command: openssl dhparam -out blog-voyage.dhkey {{ nginx.dh_key_size }}
+  args:
+    chdir: /etc/nginx/ssl
+    creates: blog-voyage.dhkey
+  notify: Restart nginx
+
+- include: ssl/self_signed.yml
+  when: environment_name != 'prod'

@@ -1,9 +1,12 @@
 environment_name: dev
 username: ubuntu
 domain_name: blog-voyage.wordpress.com
-php_pool_options:
-  max_children: 2
-  start_servers: 1
-  min_spare_servers: 1
-  max_spare_servers: 1
-nginx_processes: 2
+php:
+  pool_options:
+    max_children: 2
+    start_servers: 1
+    min_spare_servers: 1
+    max_spare_servers: 1
+nginx:
+  worker_processes: 2
+  dh_key_size: 1024
