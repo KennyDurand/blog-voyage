@@ -1,0 +1,17 @@
+---
+- name: Set wp-config.php
+  template:
+    src: wp-config.php.dist
+    dest: /var/www/blog-voyage/web/wp-config.php
+
+- name: Create database
+  mysql_db:
+    name: wordpress
+    config_file: ~/.mysql.dev.cnf
+
+- name: Create user
+  mysql_user:
+    name: ubuntu
+    password: "{{ mysql_password }}"
+    priv: 'wordpress.*:ALL'
+    config_file: ~/.mysql.dev.cnf

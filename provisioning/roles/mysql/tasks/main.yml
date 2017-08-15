@@ -9,16 +9,3 @@
     - libmysqlclient-dev
     - python-mysqldb
   notify: Restart service
-
-- name: Create database
-  mysql_db:
-    name: blog
-    config_file: ~/.mysql.dev.cnf
-
-- name: Create user
-  mysql_user:
-    name: ubuntu
-    password: "*7F907A6356F3B551EAC4D5779123ED8B5B665534"
-    encrypted: yes
-    priv: 'blog.*:ALL'
-    config_file: ~/.mysql.dev.cnf

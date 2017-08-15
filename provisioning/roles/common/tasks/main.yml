@@ -9,12 +9,6 @@
   - curl
   - wget
   - python
-  - python-setuptools
-
-- name: Install pip
-  become: yes
-  easy_install:
-    name: pip
 
 - name: Set timezone
   become: yes

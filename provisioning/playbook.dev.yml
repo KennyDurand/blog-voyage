@@ -4,8 +4,10 @@
   vars_files:
     - vars/base.yml
     - vars/dev.yml
+    - ~/.passwords.yml
   roles:
     - common
     - php7
     - nginx
     - mysql
+    - wordpress
