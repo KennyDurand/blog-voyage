@@ -6,4 +6,4 @@ php_pool_options:
   start_servers: 1
   min_spare_servers: 1
   max_spare_servers: 1
-nginx_processes: 1
+nginx_processes: 2

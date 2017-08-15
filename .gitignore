@@ -4,7 +4,7 @@
 provisioning/*.retry
 
 *.log
-web/wp-config.php
+wp-config.php
 web/wp-content/advanced-cache.php
 web/wp-content/backup-db/
 web/wp-content/backups/

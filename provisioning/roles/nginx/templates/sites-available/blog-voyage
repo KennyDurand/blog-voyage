@@ -1,6 +1,6 @@
-upstream php {
-    server unix:/var/.socket;
-    server 127.0.0.1:9000;
+server {
+    server_name  _;
+    return 302 $scheme://{{ domain_name }}$request_uri;
 }
 
 server {
@@ -33,12 +33,23 @@ server {
         try_files $uri $uri/ /index.php?$args;
     }
 
+    location ~ /\. {
+        return 404;
+    }
+
+    location ~* /(?:uploads)/.*\.php$ {
+        return 404;
+    }
+
     location ~ \.php$ {
-        include fastcgi.conf;
         fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        if (!-f $document_root$fastcgi_script_name) {
+            return 404;
+        }
         fastcgi_param HTTP_PROXY "";
         fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
         fastcgi_index index.php;
+        include fastcgi.conf;
     }
 
     location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {

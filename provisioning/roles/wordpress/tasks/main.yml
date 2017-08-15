@@ -2,7 +2,7 @@
 - name: Set wp-config.php
   template:
     src: wp-config.php.dist
-    dest: /var/www/blog-voyage/web/wp-config.php
+    dest: /var/www/blog-voyage/wp-config.php
 
 - name: Create database
   mysql_db:
