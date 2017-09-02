@@ -1,0 +1,52 @@
+---
+- name: Install Python dependencies
+  become: true
+  apt: name={{ item }} state=present
+  with_items:
+    - build-essential
+    - libssl-dev
+    - libffi-dev
+    - python-dev
+    - python-pip
+    - python-virtualenv
+    - dialog
+    - libaugeas0
+    - ca-certificates
+
+- name: Install Python cryptography module
+  become: true
+  pip: name=cryptography
+
+- name: Download LetsEncrypt Python client
+  git:
+    dest: /etc/nginx/ssl/certbot
+    clone: yes
+    repo: https://github.com/certbot/certbot
+    force: yes
+
+- name: Generate SSL certificate
+  become: true
+  shell: /etc/nginx/ssl/certbot/certbot-auto certonly --non-interactive --email durand.kenny@gmail.com --webroot --webroot-path /var/www/blog-voyage/web --domains {{ domain_name }} --expand --agree-tos --renew-by-default
+  args:
+    executable: /bin/bash
+    creates: /etc/nginx/ssl/blog-voyage.crt
+
+- name: Symbolic link SSL certificate
+  become: true
+  file:
+    dest: "{{ item.dest }}"
+    src: "{{ item.src }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    state: link
+  with_items:
+    - { src: "/etc/letsencrypt/live/{{ domain_name }}/fullchain.pem", dest: "/etc/nginx/ssl/blog-voyage.crt" }
+    - { src: "/etc/letsencrypt/live/{{ domain_name }}/privkey.pem", dest: "/etc/nginx/ssl/blog-voyage.key" }
+
+- name: Setup cron for SSL renewal
+  become: true
+  cron: name="SSL certificate renewal" job="/etc/nginx/ssl/certbot/certbot-auto renew" hour=1 minute=0 day=1
+
+- name: Setup cron to restart Nginx after SSL renewal
+  become: true
+  cron: name="Restart nginx" job="service nginx restart" hour=2 minute=0 day=1

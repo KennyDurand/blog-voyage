@@ -39,7 +39,7 @@ server {
         try_files $uri $uri/ /index.php?$args;
     }
 
-    location ~ /\. {
+    location ~ /\.(?!well-known) {
         return 404;
     }
 

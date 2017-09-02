@@ -1,4 +1,13 @@
 ---
+- name: Clone project
+  git:
+    repo: git://github.com/KennyDurand/blog-voyage.git
+    dest: /var/www/blog-voyage
+    version: master
+    force: yes
+    accept_hostkey: yes
+  when: environment_name != 'dev'
+
 - name: Set wp-config.php
   template:
     src: wp-config.php.dist

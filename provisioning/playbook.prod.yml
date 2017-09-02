@@ -1,10 +1,10 @@
 ---
-- hosts: dev
+- hosts: prod
   become: yes
   vars_files:
     - vars/base.yml
-    - vars/dev.yml
-    - ~/.passwords.dev.yml
+    - vars/prod.yml
+    - ~/.passwords.prod.yml
   roles:
     - common
     - php

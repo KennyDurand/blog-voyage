@@ -1,0 +1,12 @@
+environment_name: prod
+username: ubuntu
+domain_name: www.idees-voyage.fr
+php:
+  pool_options:
+    max_children: 2
+    start_servers: 1
+    min_spare_servers: 1
+    max_spare_servers: 1
+nginx:
+  worker_processes: 2
+  dh_key_size: 4096

@@ -16,3 +16,6 @@
 
 - include: ssl/self_signed.yml
   when: environment_name != 'prod'
+
+- include: ssl/lets_encrypt.yml
+  when: environment_name == 'prod'
