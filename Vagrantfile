@@ -21,6 +21,9 @@ Vagrant.require_version ">= 1.9.0"
 if not Vagrant.has_plugin? "vagrant-vbguest"
   system "vagrant plugin install vagrant-vbguest"
 end
+if not Vagrant.has_plugin? "vagrant-triggers"
+  system "vagrant plugin install vagrant-triggers"
+end
 if OS.mac? and not Vagrant.has_plugin? "vagrant-bindfs"
   system "vagrant plugin install vagrant-bindfs"
 end
@@ -51,5 +54,9 @@ Vagrant.configure("2") do |config|
         ansible.groups = {
             "dev" => ["blog-voyage"]
         }
+    end
+
+    config.trigger.after :up do
+      system "open", "https://blog-voyage.wordpress.com/"
     end
 end
