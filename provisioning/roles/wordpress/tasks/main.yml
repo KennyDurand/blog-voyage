@@ -22,11 +22,19 @@
 - name: Create database
   mysql_db:
     name: wordpress
-    config_file: ~/.mysql.dev.cnf
+    config_file: ../secrets/.root.cnf
 
 - name: Create user
   mysql_user:
     name: ubuntu
-    password: "{{ mysql_password }}"
+    password: "{{ mysql.password }}"
     priv: 'wordpress.*:ALL'
-    config_file: ~/.mysql.dev.cnf
+    config_file: ../secrets/.root.cnf
+
+- name: Allow access from outside
+  mysql_user:
+    name: ubuntu
+    password: "{{ mysql.password }}"
+    priv: 'wordpress.*:ALL'
+    host_all: yes
+    config_file: ../secrets/.root.cnf

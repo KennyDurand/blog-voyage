@@ -10,3 +10,5 @@ php:
 nginx:
   worker_processes: 2
   dh_key_size: 1024
+mysql:
+  password: "{{ passwords.dev.mysql }}"

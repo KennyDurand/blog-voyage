@@ -9,3 +9,11 @@
     - libmysqlclient-dev
     - python-mysqldb
   notify: Restart service
+
+- name: Change configuration
+  become: yes
+  lineinfile:
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: bind_address =
+    line: bind_address = 0.0.0.0
+  notify: Restart service

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+COMMAND=$1
+
+parse_yaml() {
+   local prefix=$2
+   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+   sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+   awk -F$fs '{
+      indent = length($1)/2;
+      vname[indent] = $2;
+      for (i in vname) {if (i > indent) {delete vname[i]}}
+      if (length($3) > 0) {
+         vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+      }
+   }'
+}
+
+if [[ $COMMAND == "update-db" ]]; then
+	if [ -f secrets/.passwords.yml ]; then
+    eval $(parse_yaml "secrets/.passwords.yml")
+	else
+    echo "Mot de passe MySQL (dev) ?"
+    read -s passwords_dev_mysql
+    echo "Mot de passe MySQL (prod) ?"
+    read -s passwords_prod_mysql
+	fi
+	mysqldump -h 52.31.221.186 -u ubuntu wordpress --databases --password="$passwords_prod_mysql" | mysql wordpress --password="$passwords_dev_mysql"
+	exit 0;
+fi
+
+echo "Command \"$COMMAND\" not found." 1>&2
+exit 1;

@@ -2,9 +2,9 @@
 - hosts: dev
   become: yes
   vars_files:
+    - ../secrets/.passwords.yml
     - vars/base.yml
     - vars/dev.yml
-    - ~/.passwords.dev.yml
   roles:
     - common
     - php

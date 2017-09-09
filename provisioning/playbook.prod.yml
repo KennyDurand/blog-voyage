@@ -2,9 +2,9 @@
 - hosts: prod
   become: yes
   vars_files:
+    - ../secrets/.passwords.yml
     - vars/base.yml
     - vars/prod.yml
-    - ~/.passwords.prod.yml
   roles:
     - common
     - php
