@@ -8,6 +8,17 @@
     accept_hostkey: yes
   when: environment_name != 'dev'
 
+- name: Create environment file
+  template:
+    src: .env.dist
+    dest: /var/www/blog-voyage/.env.{{ environment_name }}
+  when: environment_name != 'dev'
+
+- name: Run Composer
+  shell: composer install -n
+  args:
+    chdir: /var/www/blog-voyage
+
 - name: Create database
   mysql_db:
     name: wordpress

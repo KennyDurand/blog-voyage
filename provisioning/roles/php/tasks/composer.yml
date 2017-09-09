@@ -1,0 +1,24 @@
+---
+- name: Check if Composer installed
+  shell: which composer
+  register: composer_check
+  failed_when: False
+  changed_when: False
+
+- name: Download Composer installer
+  get_url: url=https://getcomposer.org/installer dest=/tmp/composer_installer
+  when: composer_check|failed
+
+- name: Run Composer installer
+  shell: php /tmp/composer_installer
+  when: composer_check|failed
+
+- name: Make Composer global
+  become: yes
+  shell: mv composer.phar /usr/local/bin/composer
+  when: composer_check|failed
+
+- name: Make Composer executable
+  become: yes
+  file: path=/usr/local/bin/composer mode=0755
+  when: composer_check|failed

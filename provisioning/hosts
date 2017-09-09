@@ -1,5 +1,5 @@
 [dev]
-100.100.100.101                                   ansible_ssh_user=vagrant
+100.100.100.101 ansible_ssh_user=vagrant
 
 [prod]
-ec2-34-248-59-55.eu-west-1.compute.amazonaws.com  ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/amazon-blog-voyage.pem
+52.31.221.186   ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/amazon-blog-voyage.pem
