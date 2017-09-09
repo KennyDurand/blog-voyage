@@ -1,22 +1,32 @@
-*.DS_Store
+### Miscellaneous
+.DS_Store
+Thumbs.db
+*.log
+
+### Setup
+provisioning/*.retry
 .vagrant/
 
-provisioning/*.retry
+### Composer
+composer.lock
+vendor/
 
-*.log
-wp-config.php
-web/wp-content/advanced-cache.php
-web/wp-content/backup-db/
-web/wp-content/backups/
-web/wp-content/blogs.dir/
-web/wp-content/cache/
-web/wp-content/upgrade/
-web/wp-content/uploads/
-web/wp-content/themes/
-web/wp-content/languages/
-web/wp-content/wp-cache-config.php
-web/wp-content/plugins/hello.php
+### IDE
+.idea/
 
-web/license.txt
-web/readme.html
-web/sitemap.*
+### PHPCS
+cs_fixer*
+
+### Wordpress
+/htdocs/cms/*
+!/htdocs/cms/.gitkeep
+/htdocs/content/mu-plugins/themosis-framework/
+/htdocs/content/themes/themosis-theme/
+/htdocs/content/uploads/
+/htdocs/content/upgrade/
+
+
+### Environment Credentials
+.env
+.env.*
+!.env.dev

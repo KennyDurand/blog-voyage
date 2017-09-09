@@ -26,7 +26,7 @@
 
 - name: Generate SSL certificate
   become: true
-  shell: /etc/nginx/ssl/certbot/certbot-auto certonly --non-interactive --email durand.kenny@gmail.com --webroot --webroot-path /var/www/blog-voyage/web --domains {{ domain_name }} --expand --agree-tos --renew-by-default
+  shell: /etc/nginx/ssl/certbot/certbot-auto certonly --non-interactive --email durand.kenny@gmail.com --webroot --webroot-path /var/www/blog-voyage/htdocs/cms --domains {{ domain_name }} --expand --agree-tos --renew-by-default
   args:
     executable: /bin/bash
     creates: /etc/nginx/ssl/blog-voyage.crt
