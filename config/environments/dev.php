@@ -27,4 +27,4 @@ define('SCRIPT_DEBUG', true);
 
 // Themosis framework
 define('THEMOSIS_ERROR', true);
-define('BS', true);
+define('BS', false);

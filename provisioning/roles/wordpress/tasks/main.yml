@@ -38,3 +38,5 @@
     priv: 'wordpress.*:ALL'
     host_all: yes
     config_file: ../secrets/.root.cnf
+
+- include: deploy.yml

@@ -1,0 +1,12 @@
+---
+- name: Run NPM install
+  become: no
+  shell: npm install
+  args:
+    chdir: /var/www/blog-voyage/htdocs/content/themes/idees-voyage
+
+- name: Run Gulp build
+  become: no
+  shell: ./node_modules/.bin/gulp build
+  args:
+    chdir: /var/www/blog-voyage/htdocs/content/themes/idees-voyage

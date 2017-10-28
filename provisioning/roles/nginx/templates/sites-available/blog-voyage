@@ -39,6 +39,10 @@ server {
         try_files $uri $uri/ /index.php?$args;
     }
 
+    location ~ /content/themes/.*/dist {
+        try_files /../$uri /../$uri/ =404;
+    }
+
     location ~ /\.(?!well-known) {
         return 404;
     }

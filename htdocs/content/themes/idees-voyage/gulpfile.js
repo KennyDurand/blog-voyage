@@ -235,7 +235,7 @@ gulp.task('webpack', function (callback) {
 gulp.task('watch', function()
 {
     bs.init({
-        https: false
+        https: true
     });
 
     gulp.watch(dirs.src + '/stylus/**/*.styl', gulp.series('stylus:dev'));
