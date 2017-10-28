@@ -8,6 +8,7 @@
   roles:
     - common
     - php
+    - node
     - nginx
     - mysql
     - wordpress

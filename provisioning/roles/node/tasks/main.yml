@@ -1,0 +1,13 @@
+---
+- name: Add APT repository
+  become: yes
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_7.x trusty main
+    state: present
+
+- name: Install packages
+  become: yes
+  apt:
+    name: nodejs
+    state: latest
+    allow_unauthenticated: yes
