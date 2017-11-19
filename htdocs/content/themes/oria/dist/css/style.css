@@ -1,23 +1,3 @@
-/*
-Theme Name: Oria
-Theme URI: http://justfreethemes.com/oria
-Author: JustFreeThemes
-Author URI: http://justfreethemes.com
-Description: Oria is a responsive masonry theme that lets you tell your stories in a clean and modern environment. Some of the features are: parallax header image, social menu, custom colors, easy access to all Google Fonts, a built-in featured posts carousel. A full demo is available here: http://demo.flyfreemedia.com/oria
-Version: 1.07
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: oria
-Tags: custom-colors, custom-background, custom-menu, custom-header, featured-images, sticky-post, theme-options, threaded-comments, translation-ready
-
-This theme, like WordPress, is licensed under the GPL.
-Use it to make something cool, have fun, and share what you've learned with others.
-
-Oria is based on Underscores http://underscores.me/, (C) 2012-2015 Automattic, Inc.
-Underscores is distributed under the terms of the GNU GPL v2 or later.
-*/
-
-
 body {
 	font-family: 'Lato', sans-serif;
 	font-size: 14px;
@@ -1006,6 +986,9 @@ img {
 }
 .admin-bar .widget-area.no-toggle {
 	top: 0;
+}
+#secondary {
+	z-index: 999;
 }
 /*--------------------------------------------------------------
 ## Header
