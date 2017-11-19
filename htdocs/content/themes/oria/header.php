@@ -18,6 +18,13 @@
 <?php endif; ?>
 
 <?php wp_head(); ?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-109842627-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-109842627-1');
+</script>
 </head>
 
 <body <?php body_class(); ?>>
@@ -53,8 +60,8 @@ endif;
 				<?php wp_nav_menu( array( 'theme_location' => 'social', 'link_before' => '<span class="screen-reader-text">', 'link_after' => '</span>', 'menu_class' => 'menu clearfix', 'fallback_cb' => false ) ); ?>
 			</nav>
 			<?php endif; ?>
-		
-			<?php if ( is_active_sidebar( 'sidebar-1' ) && !is_singular() ) : ?>		
+
+			<?php if ( is_active_sidebar( 'sidebar-1' ) && !is_singular() ) : ?>
 			<div class="sidebar-toggle">
 				<i class="fa fa-plus"></i>
 			</div>
@@ -73,7 +80,7 @@ endif;
 		<nav class="mobile-nav"></nav>
 
 	</header><!-- #masthead -->
-	
+
 	<?php if ( ( get_theme_mod('carousel_display_front') && is_front_page() ) || ( get_theme_mod('carousel_display_archives', '1') && ( is_home() || is_archive() ) ) || ( ( get_theme_mod('carousel_display_singular') && is_singular() ) ) ) : ?>
 		<?php oria_slider_template(); ?>
 	<?php endif; ?>
